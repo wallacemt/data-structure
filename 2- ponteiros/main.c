@@ -4,7 +4,7 @@
 int main()
 {
 	int *vetor = NULL; //inicializa o vetor como nulo
-	int tamanho = 0;
+	int tamanho = 0; //inicializa o tamanho como 0
 	
 	printf("Digite o tamanho do vetor: ");
 	scanf("%d", &tamanho);//armazena o dado que o usuario digitou
