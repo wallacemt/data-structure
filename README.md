@@ -19,6 +19,7 @@ O repositório está organizado em pastas, cada uma contendo códigos e exemplos
 
 - `1- variaveis-e-memoria/` - Primeiro contato com estrutura de dados observando os endereços das variáveis na memória do computador.
 - `2- ponteiros/` - Mostrando como funciona os ponteiros de memória.
+- `3- listas-encadeadas/` - Mostrando como funciona as listas encadeadas em c.
 
 ## 🚀 Como Utilizar
 
