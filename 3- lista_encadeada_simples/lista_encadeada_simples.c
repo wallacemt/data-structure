@@ -110,7 +110,7 @@ void insereMeio(node *LISTA)
 	node *novo = (node *)malloc(sizeof(node));
 	if (novo == NULL)
 	{
-		fprintf(stderr, "Erro ao alocar memória.\n");
+		printf("Erro ao alocar memória.\n");
 		return;
 	}
 	printf("Idade por favor: ");
@@ -130,7 +130,7 @@ void insereMeio(node *LISTA)
 void imprimeLista(node *LISTA)
 {
 	node *temp = LISTA->prox;
-	printf("Conteúdo da lista:\n");
+	printf("Conteudo da lista:\n");
 	while (temp != NULL)
 	{
 		printf("%d\n", temp->idade);
