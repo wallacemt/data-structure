@@ -16,7 +16,8 @@ void insereInicio(node *LISTA);
 void insereFim(node *LISTA);
 void insereMeio(node *LISTA);
 void imprimeLista(node *LISTA);
-void libera(node *LISTA);
+void removeNode(node *LISTA);
+
 
 // Funções auxiliares
 int menu(void);
@@ -39,7 +40,6 @@ int main()
 		opcaoMenu(LISTA, opcao);
 	} while (opcao != 0);
 
-	libera(LISTA);
 	free(LISTA);
 	return 0;
 }
@@ -72,6 +72,7 @@ void insereInicio(node *LISTA)
 	LISTA->prox = novo;
 }
 
+
 // Insere um nó no final da lista
 void insereFim(node *LISTA)
 {
@@ -100,30 +101,58 @@ void insereFim(node *LISTA)
 	}
 }
 
+
+//remove elemento da lista
+void removeNode(node *LISTA){
+    int num;
+    printf("Qual elemento deseja remover?: ");
+    scanf("%d", &num);
+    
+    
+    node *temp = LISTA;
+    node *suc = NULL;
+    node *ant = NULL;
+    while(temp != NULL && temp->idade != num){
+        ant = temp;
+        temp = temp->prox;
+    }
+    
+    if(temp!=NULL){
+        suc = temp->prox;
+        if(ant!=NULL){
+            ant->prox = suc;    
+        } else {
+            LISTA = suc;
+        }
+        free(temp);
+    }
+    
+}
+
 // Insere um nó em uma posição específica na lista
 void insereMeio(node *LISTA)
 {
-	int pos;
-	printf("Posicao para inserir (0 para inicio, 1 para posicao 1, etc.): ");
-	scanf("%d", &pos);
-
+	int num;
 	node *novo = (node *)malloc(sizeof(node));
-	if (novo == NULL)
-	{
-		printf("Erro ao alocar memória.\n");
-		return;
-	}
-	printf("Idade por favor: ");
-	scanf("%d", &novo->idade);
-
+    printf("Idade por favor: ");
+    scanf("%d", &novo->idade);
+    
+	printf("Inserir depois de qual número: ");
+	scanf("%d", &num);
+	
 	node *temp = LISTA;
-	for (int i = 0; i < pos && temp->prox != NULL; i++)
-	{
-		temp = temp->prox;
+	if(vazia){
+	        printf("A lista esta vazia! ");
+	}else{
+	    while(temp != NULL && temp->prox !=NULL && temp->prox->idade != num){
+	           temp = temp->prox;
+	       }    
 	}
 
 	novo->prox = temp->prox;
 	temp->prox = novo;
+	
+	free(temp);
 }
 
 // Imprime todos os elementos da lista
@@ -139,17 +168,6 @@ void imprimeLista(node *LISTA)
 	printf("-----------------\n");
 }
 
-// Libera a memória alocada para a lista
-void libera(node *LISTA)
-{
-	node *temp;
-	while (LISTA != NULL)
-	{
-		temp = LISTA;
-		LISTA = LISTA->prox;
-		free(temp);
-	}
-}
 
 // Função para exibir o menu
 int menu(void)
@@ -161,37 +179,42 @@ int menu(void)
 	printf("2 - Imprimir a lista\n");
 	printf("3 - Inserir no fim\n");
 	printf("4 - Inserir no meio\n");
+	printf("5 - Remover Elemento\n");
 	printf("Opcao: ");
 	scanf("%d", &opcao);
 	return opcao;
 }
 
-// Executa a opção escolhida pelo usuário
+
 void opcaoMenu(node *LISTA, int op)
 {
 	switch (op)
 	{
 	case 1:
-		system("cls");
+		system("clear");
 		insereInicio(LISTA);
 		break;
 	case 2:
-		system("cls");
+		system("clear");
 		imprimeLista(LISTA);
 		break;
 	case 3:
-		system("cls");
+		system("clear");
 		insereFim(LISTA);
 		break;
 	case 4:
-		system("cls");
+		system("clear");
 		insereMeio(LISTA);
 		break;
+	case 5:
+	    system("clear");
+	    removeNode(LISTA);
+	    break;
 	case 0:
 		// Caso para sair, não faz nada
 		break;
 	default:
-		system("cls");
+		system("clear");
 		printf("Opção inválida! Por favor, escolha uma opção do menu.\n\n");
 		break;
 	}
