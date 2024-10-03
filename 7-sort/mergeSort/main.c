@@ -1,71 +1,84 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void mergesort(int *v, int n);
-void sort(int *v, int *c, int i, int f);
-void merge(int *v, int *c, int i, int m, int f);
+// Função para mesclar dois subarrays
+void merge(int arr[], int left, int mid, int right) {
+    int i, j, k;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-int main (void) {
-  int i;
-  int v[8] = { 10, 34, 22, 44, 67, 8, 2, 1 };
+    // Criando arrays temporários
+    int L[n1], R[n2];
 
-  mergesort(v, 8);
+    // Copiando os dados para os arrays temporários L[] e R[]
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
 
-  for (i = 0; i < 8; i++) printf("%d ", v[i]);
+    // Mesclando os arrays temporários de volta no arr[]
+    i = 0; // Índice inicial do primeiro subarray
+    j = 0; // Índice inicial do segundo subarray
+    k = left; // Índice inicial do array mesclado
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
 
-  return 0;
+    // Copiando os elementos restantes de L[], se houver
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Copiando os elementos restantes de R[], se houver
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
 }
 
-/*
-  Dado um vetor de inteiros v e um inteiro n >= 0, ordena o vetor v[0..n-1] em ordem crescente.
-*/
-void mergesort(int *v, int n) {
-  int *c = malloc(sizeof(int) * n);
-  sort(v, c, 0, n - 1);
-  free(c);
+// Função recursiva para dividir o array e chamar a função de mesclagem
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        // Encontrar o ponto médio
+        int mid = left + (right - left) / 2;
+
+        // Dividir o array nas duas metades
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        // Mesclar as duas metades
+        merge(arr, left, mid, right);
+    }
 }
 
-/*
-  Dado um vetor de inteiros v e dois inteiros i e f, ordena o vetor v[i..f] em ordem crescente.
-  O vetor c Ã© utilizado internamente durante a ordenaÃ§Ã£o.
-*/
-void sort(int *v, int *c, int i, int f) {
-  if (i >= f) return;
-
-  int m = (i + f) / 2;
-
-  sort(v, c, i, m);
-  sort(v, c, m + 1, f);
-
-  /* Se v[m] <= v[m + 1], entÃ£o v[i..f] jÃ¡ estÃ¡ ordenado. */
-  if (v[m] <= v[m + 1]) return;
-
-  merge(v, c, i, m, f);
+// Função para imprimir um array
+void printArray(int arr[], int size) {
+	int i=0;
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
 }
 
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
 
-/*
-  Dado um vetor v e trÃªs inteiros i, m e f, sendo v[i..m] e v[m+1..f] vetores ordenados,
-  coloca os elementos destes vetores, em ordem crescente, no vetor em v[i..f].
-*/
-void merge(int *v, int *c, int i, int m, int f) {
-  int z,
-      iv = i, ic = m + 1;
+    printf("Array original: \n");
+    printArray(arr, arr_size);
 
-  for (z = i; z <= f; z++) c[z] = v[z];
+    mergeSort(arr, 0, arr_size - 1);
 
-  z = i;
-
-  while (iv <= m && ic <= f) {
-    /* Invariante: v[i..z] possui os valores de v[iv..m] e v[ic..f] em ordem crescente. */
-
-    if (c[iv] <= c[ic]) v[z++] = c[iv++];
-    else v[z++] = c[ic++];
-  }
-
-  while (iv <= m) v[z++] = c[iv++];
-
-  while (ic <= f) v[z++] = c[ic++];
+    printf("\nArray ordenado: \n");
+    printArray(arr, arr_size);
+    return 0;
 }
-
-
