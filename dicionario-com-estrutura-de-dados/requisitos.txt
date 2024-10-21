@@ -1,0 +1,27 @@
+Requisitos para o Trabalho: Dicionário em C
+
+O objetivo do projeto é criar um dicionário de palavras em português, onde será possível cadastrar, alterar, buscar e excluir palavras, além de associar características a cada uma delas. Abaixo, os principais requisitos do sistema:
+
+Cadastro de Palavras:
+
+O usuário poderá cadastrar palavras em português.
+Para cada palavra, será possível cadastrar suas características, como:
+Se é um pronome, adjetivo, sujeito, etc.
+Tradução da palavra para o inglês.
+Exemplo de uma frase que contenha essa palavra.
+Busca por Palavra:
+
+O sistema deve permitir a busca por uma palavra em português.
+Ao buscar uma palavra, o sistema exibirá:
+Tradução para o inglês.
+Tipo gramatical (pronome, adjetivo, etc.).
+Frase de exemplo cadastrada.
+Listagem de Palavras:
+
+O sistema deve exibir uma lista com todas as palavras cadastradas.
+Alteração de Palavra ou Características:
+
+O usuário poderá alterar as informações cadastradas de uma palavra (como corrigir um erro de digitação, alterar a tradução ou a frase de exemplo).
+Exclusão de Palavras:
+
+O sistema permitirá que o usuário apague palavras previamente cadastradas.

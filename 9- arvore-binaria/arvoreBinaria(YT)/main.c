@@ -120,6 +120,50 @@ int buscar(No *raiz, int chave){
     }
 }
 
+No* remover(No *raiz, int chave){
+    if(raiz == NULL){
+        printf("Valor não encontrado");
+        return NULL;
+    }else{
+        if(raiz ->conteudo == chave){
+            //remove nós folhas (nós sem filhos)
+            if(raiz->esquerda == NULL && raiz->direita == NULL){
+                free(raiz);
+                return NULL;
+            }
+            else{
+                //remove nós com apenas um filho
+                if(raiz->esquerda == NULL || raiz-> direita == NULL){
+                    No *aux;
+                    if(raiz->esquerda != NULL) {
+                        aux = raiz->esquerda;
+                    }else{
+                        aux = raiz->direita;
+                    }
+                    free(raiz);
+                    return aux;
+                }else{
+                    No *aux = raiz->esquerda;
+                    while(aux->direita != NULL){
+                        aux = aux->direita;
+                    }
+                    raiz->conteudo = aux->conteudo;
+                    aux->conteudo =  chave;
+                    raiz->esquerda = remover(raiz->esquerda, chave);
+                    return raiz;
+                }
+            }
+        }else{
+            if(chave < raiz->conteudo){
+                raiz->esquerda = remover(raiz->esquerda, chave);
+            }else{
+                raiz->direita = remover(raiz->direita, chave);
+            }
+            return raiz;
+        }
+    }
+}
+
 
 int main(){
     
@@ -128,7 +172,7 @@ int main(){
     arv.raiz = NULL;
 
     do{ 
-        printf("\n 0 - Sair \n 1 - Inserir \n 2 - Imprimir\n 3- Buscar na Arvore");
+        printf("\n 0 - Sair \n 1 - Inserir \n 2 - Imprimir\n 3 - Buscar na Arvore\n 4 - Remover");
         printf("\nInsira uma opcao: ");
         scanf("%d", &op);
 
@@ -150,6 +194,12 @@ int main(){
                 printf("\n Digite o valor que deseja buscar na arvore: ");
                 scanf("%d", &valor);
                 printf("Resultado: %d", buscar(arv.raiz, valor));
+                break;
+            case 4:
+                system("cls");
+                printf("\n Digite o valor que deseja remover: ");
+                scanf("%d", &valor);
+                arv.raiz = remover(arv.raiz, valor);
                 break;
             case 0:
                 printf("\nSaindo...\n");
